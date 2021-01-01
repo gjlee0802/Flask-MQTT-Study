@@ -65,6 +65,11 @@ client.publish("house/bulbs/bulb1","OFF")
 ~~~
 
 ### 예제 코드
+다음과 같은 순서로 동작한다.   
+1. Create new client instance   
+2. Connect to broker   
+3. Subscribe to topic   
+4. Publish message   
 ~~~
 import paho.mqtt.client as mqtt #import the client1
 broker_address="192.168.1.184" 
