@@ -44,6 +44,7 @@ client.publish("house/light","ON")
 ~~~
 
 ### 예제 코드   
+"OFF" 메시지를 "house/main-light" 토픽으로 발행하는 코드이다.   
 ~~~
 import paho.mqtt.client as mqtt #import the client1
 broker_address="192.168.1.184" 
@@ -52,3 +53,10 @@ client = mqtt.Client("P1") #create new instance
 client.connect(broker_address) #connect to broker
 client.publish("house/main-light","OFF")#publish
 ~~~
+
+### 토픽 구독   
+subscribe method를 이용한다.   
+~~~
+subscribe(topic, qos=0)
+~~~
+
