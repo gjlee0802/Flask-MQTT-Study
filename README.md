@@ -83,3 +83,14 @@ client.subscribe("house/bulbs/bulb1")
 print("Publishing message to topic","house/bulbs/bulb1")
 client.publish("house/bulbs/bulb1","OFF")
 ~~~
+
+### Callback Function   
+- Event Connection acknowledged Triggers the on_connect callback   
+- Event Disconnection acknowledged Triggers the on_disconnect callback   
+- Event Subscription acknowledged Triggers the  on_subscribe callback   
+- Event Un-subscription acknowledged Triggers the  on_unsubscribe callback   
+- Event Publish acknowledged Triggers the on_publish callback   
+- Event Message Received Triggers the on_message callback   
+- Event Log information available Triggers the on_log callback   
+
+
