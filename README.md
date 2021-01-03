@@ -93,4 +93,19 @@ client.publish("house/bulbs/bulb1","OFF")
 - Event Message Received Triggers the on_message callback   
 - Event Log information available Triggers the on_log callback   
 
+1. callback function을 생성.   
+2. 함수를 callback에 할당.   
 
+### Callback Function 예제   
+- on_connect callback
+~~~
+def myfunction(client, userdata, flags, rc):
+     logging.info("Connected flags"+str(flags)+"result code "\
+     +str(rc)+"client1_id ")
+     client.connected_flag=True
+     
+client.on_connect = myfunction
+~~~
+myfunction함수를 callback에 할당하여 호출되도록 한다.   
+
+### Callbacks and the Client Loop   
