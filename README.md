@@ -285,3 +285,12 @@ class MQTTClient(mqtt.Client):
       self.pub_msg_count=0
       self.devices=[]
 ~~~
+## Connecting to a Broker   
+
+### Connect 메소드   
+connect 메소드는 4개의 파라미터로 호출될 수 있다.   
+첫번째 파라미터 host name만 관심가지면 된다.   
+~~~
+connect(host, port=1883, keepalive=60, bind_address=””)
+~~~
+
