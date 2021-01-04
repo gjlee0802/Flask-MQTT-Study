@@ -243,3 +243,45 @@ client.will_set("device1/status", payload="Offline", qos=0, retain=True)
 client.connect("iot.eclipse.org", 1883, 60)
 client.loop_forever()
 ~~~
+
+### Client Class 초기화 예제코드   
+**방법1. client를 생성하고 반환하는 함수 작성.**   
+~~~
+import paho.mqtt.client as mqtt
+def Initialise_clients(cname):
+    #callback assignment
+    client= mqtt.Client(cname,False) #don't use clean session
+    if mqttclient_log: #enable mqqt client logging
+        client.on_log=on_log
+    client.on_connect= on_connect        #attach function to callback
+    client.on_message=on_message        #attach function to callback
+    client.on_subscribe=on_subscribe
+	#flags set
+    client.topic_ack=[]
+    client.run_flag=False
+    client.running_loop=False
+    client.subscribe_flag=False
+    client.bad_connection_flag=False
+    client.connected_flag=False
+    client.disconnect_flag=False
+    return client
+~~~
+**방법2. 서브 클래스를 생성하는 방법.**   
+~~~
+import paho.mqtt.client as mqtt
+
+class MQTTClient(mqtt.Client):
+   
+   def __init__(self,cname,**kwargs):
+      super(MQTTClient, self).__init__(cname,**kwargs)
+      self.last_pub_time=time.time()
+      self.topic_ack=[]
+      self.run_flag=True
+      self.subscribe_flag=False
+      self.bad_connection_flag=False
+      self.connected_flag=True
+      self.disconnect_flag=False
+      self.disconnect_time=0.0
+      self.pub_msg_count=0
+      self.devices=[]
+~~~
