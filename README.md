@@ -143,6 +143,7 @@ client loop를 시작하므로 연결될 시, self.on_connect callback함수를 
 ~~~
 #client.loop_start()
 ~~~
+무한루프인 것을 확인할 수 있다.   
 ![img2](img/2.png)   
 
 - on_connect() callback   
