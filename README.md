@@ -106,7 +106,7 @@ def myfunction(client, userdata, flags, rc):
      
 client.on_connect = myfunction
 ~~~
-myfunction함수를 callback에 할당하여 호출되도록 한다.   
+myfunction함수를 callback으로 할당하여 호출되도록 한다.   
 
 ### Callbacks and the Client Loop   
 Callback들은 Client Loop에 의존한다.
@@ -136,9 +136,55 @@ client.disconnect()
 client.loop_stop()
 ~~~
 **실행결과**   
+self.on_connect함수를 callback으로 할당해준 뒤, client loop를 시작하도록 한 코드이다.   
+client loop를 시작하므로 연결될 시, self.on_connect callback함수를 통해 loop_flag를 0으로 바꾸어 waiting 작업을 하지 않도록 한다.   
 ![img1](img/1.png)   
-위의 코드에서 다음과 같이 주석처리하고 다시 실행시켜보자.   
+위의 코드에서 다음과 같이 loop_start부분을 주석처리하고 다시 실행시켜보자.   
 ~~~
 #client.loop_start()
 ~~~
 ![img2](img/2.png)   
+
+- on_connect() callback   
+4개의 인자를 처리한다. 브로커가 우리의 연결 요청에 응답하면 호출되는 callback이다.
+~~~
+on_connect(client, userdata, flags, rc)
+~~~
+
+### 비동기일까 아니면 동기일까?**   
+loop_start() 또는 loop_forever 함수를 사용하는 경우, 루프는 별도의 스레드에서 실행되며, 이는 수신 및 송신 메시지를 처리하는 루프입니다.   
+이 경우 스크립트에서 언제든지 콜백이 발생할 수 있으며 **비동기식**입니다.   
+그러나 스크립트에서 loop() 함수를 **수동으로 호출**할 경우, loop() 함수를 호출할 때만 콜백이 발생할 수 있으므로 스크립트와 **동기화**됩니다.   
+
+### Callback들에서 값 반환하기   
+Callback에서는 일반적인 return방법으로 값을 반환할 수 없다.   
+다음과 같은 선택지가 있다.   
+- global statement를 이용해서 글로벌 변수를 선언하기.   
+- main 함수에 선언된 list를 이용하기.   
+- main 함수에 선언된 dictionary를 이용하기.   
+- main 함수에 선언된 객체를 이용하기.   
+
+**직접 적용해보기**   
+예제 코드는 https://github.com/gjlee0802/Flask-MQTT-Study/blob/main/ex_code/mqtt/clientloop.py   
+
+using list and queue   
+~~~
+q=Queue()
+messages=[]
+
+def on_message(client1, userdata, message):
+    #global messages
+    m="message received  "  ,str(message.payload.decode("utf-8"))
+    messages.append(m)#put messages in list
+    q.put(m) #put messages on queue
+    print("message received  ",m)
+~~~
+how to retrieve   
+~~~
+while len(messages)>0:
+    print(messages.pop(0))
+
+while not q.empty():
+    message = q.get()
+    print("queue: ",message)
+~~~
