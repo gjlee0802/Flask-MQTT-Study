@@ -167,7 +167,7 @@ Callback에서는 일반적인 return방법으로 값을 반환할 수 없다.
 **직접 적용해보기**   
 예제 코드는 https://github.com/gjlee0802/Flask-MQTT-Study/blob/main/ex_code/mqtt/clientloop.py   
 
-using list and queue   
+list와 queue 이용하기   
 ~~~
 q=Queue()
 messages=[]
@@ -179,7 +179,7 @@ def on_message(client1, userdata, message):
     q.put(m) #put messages on queue
     print("message received  ",m)
 ~~~
-how to retrieve   
+회수하는 방법   
 ~~~
 while len(messages)>0:
     print(messages.pop(0))
@@ -188,3 +188,42 @@ while not q.empty():
     message = q.get()
     print("queue: ",message)
 ~~~
+
+## Introduction to the Client Class   
+### Client 클래스 소개   
+Client 클래스는 모든 필수적인 함수들을 제공한다. (MQTT broker에 연결, 메시지 발행, 토픽 구독, 메시지 받기.)   
+Client 클래스의 생성자는 다음과 같이 4가지 인자를 필요로 한다.   
+~~~
+Client(client_id=””, clean_session=True, userdata=None, protocol=MQTTv311, transport=”tcp”)
+~~~
+### The Client name (The Client ID)   
+Client name은 선택사항이지만 clean sessions=True(기본값이 True)일 경우에만 선택사항이다.   
+Client name을 주지 않으면 클라이언트 소프트웨어에 의해 랜덤하게 생성된다.   
+
+### 중복된 Client id   
+중복된 아이디로 클라이언트 연결을 시도하면 기존의 연결이 끊어지고 새로 연결된다.   
+클라이언트 ID를 할당해주는 것을 조심해야한다.   
+
+### Unique Client id 생성하기   
+
+새로운 unique client id를 생성하기 위해 다음과 같은 스키마 선택지가 있다.   
+- Client prefix + Serial number of device   
+- Client prefix + Random Number   
+- Client prefix + Time   
+- Client prefix + time+random number   
+   
+**Example:** Prefix + random number – Myclient-902314   
+
+### Clean Session Flag   
+이 플래그는 브로커에게 다음 중 하나를 지시한다.   
+- False: 클라이언트가 **오프라인** 상태여서 누락된 구독 및 메시지를 **저장**   
+- True: 클라이언트가 **오프라인** 상태여서 누락된 구독 및 메시지를 **저장하지 않음** (defult값 = true)   
+
+### Auxiliary Functions or Settings   
+- max_inflight_messages_set() –Affects Message throughput   
+- max_queued_messages_set() –Affects Message throughput   
+- message_retry_set(retry) –Affects Message throughput   
+- tls_set() – Used for SSL security   
+- tls_insecure_set(value) –Used for SSL security   
+- username_pw_set()  – Used for username and passwords   
+- will_set() –Used for setting last will and testament   
