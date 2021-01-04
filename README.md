@@ -298,6 +298,7 @@ connect(host, port=1883, keepalive=60, bind_address=””)
 연결 성공을 확실히 하고싶으면 연결을 만들기 전에 이 callback 처리할 함수를 setup해야한다.   
 예를 들어 다음과 같이 callback 처리 함수를 작성하여 연결성을 더 확실히 할 수 있다.(함수 이름은 마음대로)   
 rc는 return code를 의미한다.   
+(일반적으로 userdata와 flags는 잘 이용되지 않는다.)   
 ~~~
 def on_connect(client, userdata, flags, rc):
     if rc==0:
@@ -314,4 +315,4 @@ def on_connect(client, userdata, flags, rc):
 - 5: Connection refused – not authorised
 - 6-255: Currently unused.
    
-   
+
