@@ -220,11 +220,26 @@ Client name을 주지 않으면 클라이언트 소프트웨어에 의해 랜덤
 - False: 클라이언트가 **오프라인** 상태여서 누락된 구독 및 메시지를 **저장**   
 - True: 클라이언트가 **오프라인** 상태여서 누락된 구독 및 메시지를 **저장하지 않음** (defult값 = true)   
 
-### Auxiliary Functions or Settings   
-- max_inflight_messages_set() –Affects Message throughput   
-- max_queued_messages_set() –Affects Message throughput   
-- message_retry_set(retry) –Affects Message throughput   
-- tls_set() – Used for SSL security   
-- tls_insecure_set(value) –Used for SSL security   
-- username_pw_set()  – Used for username and passwords   
-- will_set() –Used for setting last will and testament   
+### 보조 함수나 설정들   
+- max_inflight_messages_set() –메시지 처리량에 영향을 준다.   
+- max_queued_messages_set() –메시지 처리량에 영향을 준다.   
+- message_retry_set(retry) –A메시지 처리량에 영향을 준다.   
+- tls_set() – SSL 보안을 위해 사용한다.   
+- tls_insecure_set(value) –SSL 보안을 위해 사용한다.   
+- username_pw_set()  – username과 passwords를 위해 사용한다.   
+- will_set() –last will과 testament 설정(연결 해제시 처리)에 사용.   
+   
+다음은 **will_set() 사용예제**이다.   
+~~~
+import paho.mqtt.client as mqtt
+	 	 
+def on_connect(client, userdata, flags, rc):
+	print("Connected with result code "+str(rc))
+	client.publish("device1/status",payload="Online", qos=0, retain=True)
+
+client = mqtt.Client()
+client.on_connect = on_connect
+client.will_set("device1/status", payload="Offline", qos=0, retain=True)
+client.connect("iot.eclipse.org", 1883, 60)
+client.loop_forever()
+~~~
