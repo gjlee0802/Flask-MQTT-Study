@@ -135,3 +135,10 @@ while loop_flag==1:
 client.disconnect()
 client.loop_stop()
 ~~~
+**실행결과**   
+!(img1)[img/1.png]   
+위의 코드에서 다음과 같이 주석처리하고 다시 실행시켜보자.   
+~~~
+#client.loop_start()
+~~~
+!(img2)[img/2.png]   
