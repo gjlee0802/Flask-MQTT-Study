@@ -315,4 +315,25 @@ def on_connect(client, userdata, flags, rc):
 - 5: Connection refused – not authorised
 - 6-255: Currently unused.
    
-
+## Publishing Using The Paho Python MQTT Client   
+~~~
+publish(topic, payload=None, qos=0, retain=False)
+~~~
+### Publishing a Message   
+1. client 객체 생성.   
+2. client 연결 생성.   
+3. publish the message   
+4. publish request의 return code 확인   
+5. on_publish callback을 이용하여 publish acknowledgement 확인.   
+~~~
+import paho.mqtt.client as paho
+broker="192.168.1.184"
+port=1883
+def on_publish(client,userdata,result):             #create function for callback
+    print("data published \n")
+    pass
+client1= paho.Client("control1")                           #create client object
+client1.on_publish = on_publish                          #assign function to callback
+client1.connect(broker,port)                                 #establish connection
+ret= client1.publish("house/bulb1","on")                   #publish
+~~~
