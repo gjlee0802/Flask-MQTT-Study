@@ -339,7 +339,6 @@ ret= client1.publish("house/bulb1","on")                   #publish
 ~~~
 
 ### On_publish Callback   
-
 ~~~
 on_publish(client, userdata, mid)
 ~~~
@@ -349,4 +348,22 @@ mid value는 메시지ID이며 publish method에서 반환된 mid value와 함�
 ###  Message 흐름과 QOS(Quality of Service)
 Subscriber가 **온라인 상태가 아니더라도 메시지를 받도록 하려면 QOS 1 또는 2로 publish 해야 한다.**   
 다음은 QOS 0, 1, 2에 대한 메시지 흐름이다.   
-![publish-flow](mqtt-publish-message-flow.jpg)   
+![publish-flow](img/mqtt-publish-message-flow.jpg)   
+
+http://www.steves-internet-guide.com/understanding-mqtt-qos-levels-part-1/   
+http://www.steves-internet-guide.com/understanding-mqtt-qos-2/   
+
+### Retain Message Flag   
+ retain message flag를 설정할 수 있다.   
+ 이 flag는 보낸 마지막 메시지를 브로커에게 저장하도록 지시한다.   
+ 이 기능은 메시지들을 띄엄띄엄 publish하는 경우에만 유용하다.   
+ 
+ ### Disconnecting After Publish   
+disconnect method를 on_disconnect callback과 함께 이용하여 연결을 끊을 수 있다.   
+이러한 disconnect는 last will and testament 메시지를 낳지 않는다.   
+~~~
+def on_disconnect(client, userdata, rc):
+   print("client disconnected ok")
+client1.on_disconnect = on_disconnect
+client1.disconnect()
+~~~
