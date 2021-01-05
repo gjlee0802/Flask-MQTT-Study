@@ -337,3 +337,11 @@ client1.on_publish = on_publish                          #assign function to cal
 client1.connect(broker,port)                                 #establish connection
 ret= client1.publish("house/bulb1","on")                   #publish
 ~~~
+
+### On_publish Callback   
+
+~~~
+on_publish(client, userdata, mid)
+~~~
+userdata는 일반적으로 이용되지 않는 사용자 정의 데이터이다.   
+mid value는 메시지ID이며 publish method에서 반환된 mid value와 함께 사용하여 특정 메시지가 publish되었는지 확인할 수 있다.   
