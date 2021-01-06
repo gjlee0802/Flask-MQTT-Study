@@ -389,16 +389,21 @@ subscribe(topic, qos=0)
 ~~~
 
 ### subsribe 메소드 이용 예시
-- 단일 토픽 String   
+- 단일 토픽 String.   
 ~~~
 client1.subscribe(“house/bulb1”,1)
 ~~~
-- 단일 튜플 (topic, qos)   
+- 단일 튜플 (topic, qos).   
 ~~~
 client1.subscribe((“house/bulb2”,2))
 ~~~
-- [(topic1,qos),(topic2,qos),(topic3,qos)] 형태로 튜플들의 리스트, 여러 토픽을 subscribe
+- [(topic1,qos),(topic2,qos),(topic3,qos)] 형태로 튜플들의 리스트, 여러 토픽을 subscribe.   
 ~~~
 client1.subscribe([(“house/bulb3”,2),(“house/bulb4”,1),(“house/bulb5”,0)])
 ~~~
 
+### on_subscribe Callback   
+~~~
+on_subscribe(client, userdata, mid, granted_qos)
+~~~
+mid value를 함수 호출에서 반환한 값과 비교하여 성공적인 구독 요청을 확인할 수 있다.   
