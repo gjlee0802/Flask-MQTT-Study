@@ -294,6 +294,19 @@ connect 메소드는 4개의 파라미터로 호출될 수 있다.
 connect(host, port=1883, keepalive=60, bind_address=””)
 ~~~
 
+### Connection Failures that Create an Exception
+~~~
+client.connect(broker,port) #connect to broker
+~~~
+위의 코드 대신에 아래처럼 try block을 이용하여 연결 실패 exception을 raise할 수 있다.   
+~~~
+try:
+    client1.connect(broker,port) #connect to broker
+except:
+    print(“connection failed”)
+    exit(1) #Should quit or raise flag to quit or retry
+~~~
+
 ### Return Code로 연결 성공성을 좀 더 보장하기   
 연결 성공을 확실히 하고싶으면 연결을 만들기 전에 이 callback 처리할 함수를 setup해야한다.   
 예를 들어 다음과 같이 callback 처리 함수를 작성하여 연결성을 더 확실히 할 수 있다.(함수 이름은 마음대로)   
