@@ -380,3 +380,25 @@ def on_disconnect(client, userdata, rc):
 client1.on_disconnect = on_disconnect
 client1.disconnect()
 ~~~
+
+## Subscribing using The Paho Python Client
+
+subscribe 메소드는 다음과 같이 2개 파라미터를 받는다. – A topic or topics 와 QOS (quality of Service).   
+~~~
+subscribe(topic, qos=0)
+~~~
+
+### subsribe 메소드 이용 예시
+- 단일 토픽 String   
+~~~
+client1.subscribe(“house/bulb1”,1)
+~~~
+- 단일 튜플 (topic, qos)   
+~~~
+client1.subscribe((“house/bulb2”,2))
+~~~
+- [(topic1,qos),(topic2,qos),(topic3,qos)] 형태로 튜플들의 리스트, 여러 토픽을 subscribe
+~~~
+client1.subscribe([(“house/bulb3”,2),(“house/bulb4”,1),(“house/bulb5”,0)])
+~~~
+
