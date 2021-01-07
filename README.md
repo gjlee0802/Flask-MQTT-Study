@@ -1,4 +1,4 @@
-# MQTT-Study
+# MQTT CLient Study
 학습 자료:   
 http://www.steves-internet-guide.com/mqtt-python-beginners-course/   
 ...   
