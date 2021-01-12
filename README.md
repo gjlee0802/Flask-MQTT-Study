@@ -411,4 +411,5 @@ mid value를 함수 호출에서 반환한 값과 비교하여 성공적인 구�
 # Flask-MQTT Study
 학습 자료:   
 https://flask-mqtt.readthedocs.io/en/latest/index.html   
+https://kafka-python.readthedocs.io/en/master/apidoc/modules.html
 ...   
