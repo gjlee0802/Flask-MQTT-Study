@@ -408,11 +408,3 @@ client1.subscribe([(“house/bulb3”,2),(“house/bulb4”,1),(“house/bulb5�
 on_subscribe(client, userdata, mid, granted_qos)
 ~~~
 mid value를 함수 호출에서 반환한 값과 비교하여 성공적인 구독 요청을 확인할 수 있다.   
-
-# Flask-MQTT Study
-학습 자료:   
-https://flask-mqtt.readthedocs.io/en/latest/index.html   
-...   
-# Kafka-Python
-https://kafka-python.readthedocs.io/en/master/apidoc/modules.html   
-...   
